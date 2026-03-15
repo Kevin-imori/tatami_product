@@ -1,0 +1,47 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+// ストーリー（最新版）
+model Story {
+  id        String   @id @default(cuid())
+  title     String
+  content   String
+  updatedAt DateTime @updatedAt
+  histories StoryHistory[]
+}
+
+// ストーリーの履歴
+model StoryHistory {
+  id        String   @id @default(cuid())
+  storyId   String
+  story     Story    @relation(fields: [storyId], references: [id], onDelete: Cascade)
+  title     String
+  content   String
+  createdAt DateTime @default(now())
+}
+
+// 九鬼の紹介（最新版）
+model Introduction {
+  id        String   @id @default(cuid())
+  content   String
+  updatedAt DateTime @updatedAt
+  histories IntroductionHistory[]
+}
+
+// 九鬼の紹介の履歴
+model IntroductionHistory {
+  id             String       @id @default(cuid())
+  introductionId String
+  introduction   Introduction @relation(fields: [introductionId], references: [id], onDelete: Cascade)
+  content        String
+  createdAt      DateTime     @default(now())
+}
