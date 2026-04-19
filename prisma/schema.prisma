@@ -6,8 +6,10 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
+  provider  = "postgresql"
+  // .envファイルの中にある名前に合わせる
+  url       = env("POSTGRES_URL") 
+  directUrl = env("POSTGRES_URL_NON_POOLING")
 }
 
 // ストーリー（最新版）
@@ -44,4 +46,36 @@ model IntroductionHistory {
   introduction   Introduction @relation(fields: [introductionId], references: [id], onDelete: Cascade)
   content        String
   createdAt      DateTime     @default(now())
+}
+
+// お問い合わせ
+model Inquiry {
+  id        String   @id @default(cuid())
+  name      String
+  email     String
+  subject   String?
+  message   String
+  createdAt DateTime @default(now())
+}
+
+// 九鬼の紹介：商品（食器・着物・畳など）
+model KukiProduct {
+  id        String               @id @default(cuid())
+  title     String
+  content   String
+  imageUrl  String
+  order     Int                  @default(0)
+  updatedAt DateTime             @updatedAt
+  histories KukiProductHistory[]
+}
+
+// 九鬼の紹介：商品の履歴
+model KukiProductHistory {
+  id            String      @id @default(cuid())
+  kukiProductId String
+  kukiProduct   KukiProduct @relation(fields: [kukiProductId], references: [id], onDelete: Cascade)
+  title         String
+  content       String
+  imageUrl      String
+  createdAt     DateTime    @default(now())
 }

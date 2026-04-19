@@ -1,6 +1,8 @@
 'use server'
 
-import prisma from '@/lib/prisma'
+import { PrismaClient, Prisma } from "@prisma/client"
+
+const prisma = new PrismaClient();
 
 export async function getLatestIntroduction() {
     return await prisma.introduction.findFirst({
@@ -16,7 +18,7 @@ export async function getIntroductionHistories(introductionId: string) {
 }
 
 export async function updateIntroduction(content: string) {
-    return await prisma.$transaction(async (tx: any) => {
+    return await prisma.$transaction(async (tx: Prisma.TransactionClient) => {
         // try to find existing introduction or create one
         let intro = await tx.introduction.findFirst()
         if (!intro) {

@@ -27,6 +27,14 @@ export default function AdminTop() {
                                 <div className="font-semibold">九鬼の紹介編集ページ</div>
                                 <div className="text-slate-400 group-hover:text-blue-500 transition-colors">→</div>
                             </Link>
+                            <Link href="/admin/kuki-products" className="group flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-blue-500 hover:shadow-md transition-all">
+                                <div className="font-semibold">九鬼の商品紹介 編集</div>
+                                <div className="text-slate-400 group-hover:text-blue-500 transition-colors">→</div>
+                            </Link>
+                            <Link href="/admin/inquiry" className="group flex items-center justify-between p-4 rounded-xl border border-slate-100 dark:border-slate-800 hover:border-blue-500 hover:shadow-md transition-all">
+                                <div className="font-semibold">お問い合わせ一覧</div>
+                                <div className="text-slate-400 group-hover:text-blue-500 transition-colors">→</div>
+                            </Link>
                         </div>
                     </div>
 
